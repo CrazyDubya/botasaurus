@@ -18,9 +18,9 @@ from .core.config import settings
 from .core.database import init_db
 from .auth.router import router as auth_router
 from .ai.router import router as ai_router
+from botasaurus_nocode import workflow_router, templates_router
 # Import other routers as they're built
 # from .scrapers.router import router as scrapers_router
-# from .workflows.router import router as workflows_router
 # from .marketplace.router import router as marketplace_router
 # from .pipelines.router import router as pipelines_router
 
@@ -164,8 +164,9 @@ async def root():
 # Include routers
 app.include_router(auth_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
+app.include_router(workflow_router, prefix="/api")
+app.include_router(templates_router, prefix="/api")
 # app.include_router(scrapers_router, prefix="/api")
-# app.include_router(workflows_router, prefix="/api")
 # app.include_router(marketplace_router, prefix="/api")
 # app.include_router(pipelines_router, prefix="/api")
 
