@@ -5,7 +5,7 @@ Workflow Templates API Router
 FastAPI routes for workflow templates.
 """
 
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 
@@ -28,7 +28,7 @@ router = APIRouter(prefix="/templates", tags=["templates"])
 
 @router.get("", response_model=List[WorkflowTemplate])
 def list_templates(
-    category: str | None = None,
+    category: Optional[str] = None,
     user: User = Depends(get_current_user)
 ):
     """
@@ -76,7 +76,7 @@ def get_template(
 @router.post("/{template_id}/create", response_model=WorkflowResponse, status_code=201)
 def create_workflow_from_template(
     template_id: str,
-    name: str | None = None,
+    name: Optional[str] = None,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user)
 ):
