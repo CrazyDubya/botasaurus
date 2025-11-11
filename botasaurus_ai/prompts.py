@@ -237,7 +237,8 @@ def build_selector_finder_prompt(description: str, html: str) -> list:
 
     prompt = SELECTOR_FINDER_PROMPT_TEMPLATE.format(
         description=description,
-        html=html
+        html=html,
+        selector=""
     )
 
     return [
