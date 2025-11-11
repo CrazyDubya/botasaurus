@@ -354,11 +354,15 @@ Return only the fixed code."""
         record = UsageRecord(
             id=uuid4(),
             user_id=self.user.id,
-            feature=feature,
-            tokens_used=tokens_used,
-            cost=cost,
-            model=getattr(self.llm_client, 'model', 'unknown'),
-            success=success,
+            resource_type='ai_generation',
+            count=1,
+            metadata={
+                'feature': feature,
+                'tokens_used': tokens_used,
+                'cost': cost,
+                'model': getattr(self.llm_client, 'model', 'unknown'),
+                'success': success
+            },
             created_at=datetime.utcnow()
         )
         self.db.add(record)
@@ -367,13 +371,14 @@ Return only the fixed code."""
     def get_usage_stats(self) -> UsageStats:
         """Get usage statistics for user"""
         records = self.db.query(UsageRecord).filter(
-            UsageRecord.user_id == self.user.id
+            UsageRecord.user_id == self.user.id,
+            UsageRecord.resource_type == 'ai_generation'
         ).all()
 
-        total_tokens = sum(r.tokens_used for r in records)
-        total_cost = sum(r.cost for r in records)
+        total_tokens = sum(r.metadata.get('tokens_used', 0) for r in records if r.metadata)
+        total_cost = sum(r.metadata.get('cost', 0) for r in records if r.metadata)
         requests_count = len(records)
-        successful = sum(1 for r in records if r.success)
+        successful = sum(1 for r in records if r.metadata and r.metadata.get('success', False))
         failed = requests_count - successful
 
         return UsageStats(
