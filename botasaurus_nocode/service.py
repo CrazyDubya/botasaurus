@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from ..core.database.models import (
-    Workflow, WorkflowExecution, WorkflowSchedule as DBWorkflowSchedule, User
+    Workflow, WorkflowRun, WorkflowSchedule as DBWorkflowSchedule, User
 )
 from .schemas import (
     WorkflowDefinition, WorkflowSettings, WorkflowResponse,
@@ -213,7 +213,7 @@ class WorkflowService:
             settings = request.settings_override
 
         # Create execution record
-        execution = WorkflowExecution(
+        execution = WorkflowRun(
             id=uuid4(),
             workflow_id=workflow_id,
             user_id=self.user.id,
@@ -262,9 +262,9 @@ class WorkflowService:
     def get_execution(self, execution_id: UUID) -> Optional[WorkflowExecutionResponse]:
         """Get execution by ID"""
 
-        execution = self.db.query(WorkflowExecution).filter(
-            WorkflowExecution.id == execution_id,
-            WorkflowExecution.user_id == self.user.id
+        execution = self.db.query(WorkflowRun).filter(
+            WorkflowRun.id == execution_id,
+            WorkflowRun.user_id == self.user.id
         ).first()
 
         if not execution:
@@ -280,18 +280,18 @@ class WorkflowService:
     ) -> List[WorkflowExecutionResponse]:
         """List workflow executions"""
 
-        query = self.db.query(WorkflowExecution).filter(
-            WorkflowExecution.user_id == self.user.id
+        query = self.db.query(WorkflowRun).filter(
+            WorkflowRun.user_id == self.user.id
         )
 
         if workflow_id:
-            query = query.filter(WorkflowExecution.workflow_id == workflow_id)
+            query = query.filter(WorkflowRun.workflow_id == workflow_id)
 
         if status:
-            query = query.filter(WorkflowExecution.status == status)
+            query = query.filter(WorkflowRun.status == status)
 
         executions = query.order_by(
-            desc(WorkflowExecution.started_at)
+            desc(WorkflowRun.started_at)
         ).limit(limit).all()
 
         return [self._execution_to_response(e) for e in executions]
@@ -310,8 +310,8 @@ class WorkflowService:
             return None
 
         # Get executions
-        executions = self.db.query(WorkflowExecution).filter(
-            WorkflowExecution.workflow_id == workflow_id
+        executions = self.db.query(WorkflowRun).filter(
+            WorkflowRun.workflow_id == workflow_id
         ).all()
 
         total = len(executions)
