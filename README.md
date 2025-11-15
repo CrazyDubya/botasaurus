@@ -48,7 +48,7 @@ In the video below, watch as we **bypass some of the best bot detection systems*
 - ✅ [Cloudflare Web Application Firewall (WAF)](https://nopecha.com/demo/cloudflare)  
 - ✅ [BrowserScan Bot Detection](https://www.browserscan.net/bot-detection)  
 - ✅ [Fingerprint Bot Detection](https://fingerprint.com/products/bot-detection/)  
-- ✅ [Datadome Bot Detection](https://antoinevastel.com/bots/datadome)  
+- ✅ [Datadome Bot Detection]((https://fingerprint-scan.com/))  
 - ✅ [Cloudflare Turnstile CAPTCHA](https://turnstile.zeroclover.io/)
 
 <p align="center">
@@ -554,7 +554,7 @@ A **Desktop Extractor** is a standalone application that runs on your computer a
 With zero usage costs, faster performance, and easier development, Desktop Scrapers outperform web-based alternatives.
 
 ### How to Build a Desktop Extractor
-Creating Desktop Extractors is easier than you think! All you need is a basic understanding of JavaScript. Once you're ready, read the [Desktop Extraction Tutorial](https://github.com/omkarcloud/botasaurus/blob/master/botasaurus-desktop-tutorial.md#what-will-be-built-and-why), where we'll guide you through building two practical extractors:
+Creating Desktop Extractors is easier than you think! All you need is a basic understanding of JavaScript. Once you're ready, read the [Desktop Extraction Tutorial](https://www.omkar.cloud/botasaurus/docs/botasaurus-desktop/quick-start), where we'll guide you through building two practical extractors:
 - **Yahoo Finance Stock Scraper** – Extracts real-time stock prices from Yahoo Finance.
 
 ![Stock Scraper Demo showing the application extracting stock prices from Yahoo Finance](https://raw.githubusercontent.com/omkarcloud/botasaurus/master/images/stock-scraper-preview.gif) 
@@ -567,7 +567,7 @@ As a web scraper, you might naturally want to focus on web scraping. Still, I wa
 
 **Document Data Extraction is a large untapped market.** For example, even in most developed countries, accountants often spend hundreds of hours manually entering invoice data for tax filings. A desktop extractor can transform this tedious, error-prone process into a task that takes just minutes, delivering 100% accurate results.
 
-Please read the step-by-step tutorial [here](https://github.com/omkarcloud/botasaurus/blob/master/botasaurus-desktop-tutorial.md#what-will-be-built-and-why). By the end of this short guide, you'll be able to create powerful desktop extractors in very little time.
+Please read the step-by-step tutorial [here](https://www.omkar.cloud/botasaurus/docs/botasaurus-desktop/quick-start). By the end of this short guide, you'll be able to create powerful desktop extractors in very little time.
 
 ### What is Botasaurus, and what are its main features?
 
@@ -601,7 +601,7 @@ By simply configuring these three decorators (`@browser`, `@request`, and `@task
 
 2. Offering a Python-based UI scraper that allows non-technical users to run scrapers online by simply visiting a website link. (As described in the previous FAQ)  
 
-3. Make it easy to create desktop applications for Mac, Windows, and Linux, using JavaScript. More details can be found in the [Botasaurus Desktop Documentation here](https://github.com/omkarcloud/botasaurus/blob/master/botasaurus-desktop-tutorial.md).
+3. Make it easy to create desktop applications for Mac, Windows, and Linux, using JavaScript. More details can be found in the [Botasaurus Desktop Documentation here](https://www.omkar.cloud/botasaurus/docs/botasaurus-desktop/introduction).
 
 ### How to use decorators in Botasaurus?
 
@@ -1406,7 +1406,7 @@ scrape_heading_task()
 ```  
 
 Result: 
-![not identified](https://raw.githubusercontent.com/omkarcloud/botasaurus/master/images/botasurussuccesspage.png)
+![not identified](https://raw.githubusercontent.com/omkarcloud/botasaurus/master/images/botasaurussuccesspage.png)
 
 Important Note: To run the code above, you will need [Node.js](https://nodejs.org/en) installed.
 
@@ -1431,7 +1431,14 @@ In such situations, the only solution is to switch to a different proxy provider
 
 Some good proxy providers we personally use are:
 
-- For Rotating Datacenter Proxies: **BrightData Datacenter Proxies**, which cost around $0.6 per GB on a pay-as-you-go basis. No KYC is required.
+- For Rotating Datacenter Proxies: 
+
+    - **[requests-ip-rotator](https://pypi.org/project/requests-ip-rotator/):**
+    Routes your API requests through AWS API Gateway, leveraging AWS’s large IP pool to automatically rotate IPs. The cost is negligible even for large-scale scraping (millions of pages). **Highly recommended** — this should be your default choice for datacenter proxy rotation.
+
+    - **BrightData Datacenter Proxies:**
+    Paid alternative costing around **$0.6 per GB** (pay-as-you-go). Offers a smaller proxy pool compared to AWS.
+    
 - For Rotating Residential Proxies: **IPRoyal Royal Residential Proxies**, which cost around $7 per GB on a pay-as-you-go basis. No KYC is required.
 
 As always, nothing good in life comes free. Proxies are expensive, and will take up almost all of your scraping costs. 
@@ -1538,7 +1545,7 @@ Here's an example of how to use the `metadata` option:
 from botasaurus.task import task
 
 @task()
-def scrape_heading_task(driver: Driver, data, metadata):
+def scrape_heading_task(data, metadata):
     print("metadata:", metadata)
     print("data:", data)
 

@@ -125,12 +125,12 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Omkar Cloud.`,
+      copyright: `© ${new Date().getFullYear()}, Omkar Cloud is owned by Chetan Jain IT Solutions, All Rights Reserved.`
     },
-    prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.oneDark,
-    },
+    // prism: {
+    //   // theme: prismThemes.github,
+    //   darkTheme: prismThemes.oneDark,
+    // },
   } satisfies Preset.ThemeConfig,
 };
 
