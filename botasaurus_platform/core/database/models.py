@@ -5,7 +5,7 @@ Database Models
 Core SQLAlchemy models for all platform data.
 """
 
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, Text, ForeignKey, ARRAY, JSON
+from sqlalchemy import Column, String, Integer, Boolean, DateTime, Text, ForeignKey, ARRAY
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
