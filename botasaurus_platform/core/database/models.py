@@ -197,6 +197,23 @@ class WorkflowRun(Base):
     workflow = relationship("Workflow", back_populates="runs")
 
 
+class WorkflowSchedule(Base):
+    """Workflow schedule model"""
+    __tablename__ = "workflow_schedules"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    workflow_id = Column(UUID(as_uuid=True), ForeignKey("workflows.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    schedule_type = Column(String(50), nullable=False)
+    cron_expression = Column(String(255))
+    next_run_at = Column(DateTime(timezone=True))
+    last_run_at = Column(DateTime(timezone=True))
+    enabled = Column(Boolean, default=True)
+    input_data = Column(JSONB)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+
 class APIEndpoint(Base):
     """API marketplace endpoint model"""
     __tablename__ = "api_endpoints"
